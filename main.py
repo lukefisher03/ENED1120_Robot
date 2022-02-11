@@ -26,3 +26,4 @@ drive_train = DriveBase(l_motor, r_motor, wheel_diameter=55.5, axle_track=35)
 ev3.speaker.beep()
 
 drive_train.straight(1000)
+drive_train.turn(25)
