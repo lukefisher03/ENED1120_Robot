@@ -22,24 +22,39 @@ ev3 = EV3Brick()
 r_motor = Motor(Port.D)
 l_motor = Motor(Port.C)
 gyro = GyroSensor(Port.S4)
-stopwatch = StopWatch()
 
 def gyroStraight(dist):
     r_motor.reset_angle(0)
     gyro.reset_angle(0)
-    while r_motor.angle() * 0.60 <= dist:
-        ev3.screen.print(r_motor.angle())
-        print(r_motor.angle())
+    if dist >= 0:
         
-        if gyro.angle() >= 0 + 1.5:
-            r_motor.run(300)
-            l_motor.run(250)
-        elif gyro.angle() <= 0 - 1.5:
-            l_motor.run(300)
-            r_motor.run(250)
-        else:
-            l_motor.run(300)
-            r_motor.run(300)
+        while r_motor.angle() * 0.60 <= dist:
+            ev3.screen.print(gyro.angle())
+            print(r_motor.angle())
+            
+            if gyro.angle() >= 0 + 1.5:
+                r_motor.run(300)
+                l_motor.run(250)
+            elif gyro.angle() <= 0 - 1.5:
+                l_motor.run(300)
+                r_motor.run(250)
+            else:
+                l_motor.run(300)
+                r_motor.run(300)
+    else:
+        while r_motor.angle() * 0.60 >= dist:
+            ev3.screen.print(gyro.angle())
+            print(r_motor.angle())
+            
+            if gyro.angle() >= 0 + 1.5:
+                r_motor.run(-250)
+                l_motor.run(-300)
+            elif gyro.angle() <= 0 - 1.5:
+                l_motor.run(-250)
+                r_motor.run(-300)
+            else:
+                l_motor.run(-300)
+                r_motor.run(-300)
 
     r_motor.hold()
     l_motor.hold()#make sure that the motors hold the specific angle at that point.
@@ -65,9 +80,18 @@ def gyroTurn(angle):
     l_motor.stop()#The angular rotation should not be done with .hold. It creates a jerk in the motors throwing off the values.
     wait(500)
 
-gyroStraight(609)
-gyroTurn(-180)
-gyroStraight(609)
+
+
+gyroStraight(1200)
+gyroStraight(-1200)
+
+
+gyroStraight(1200)
+gyroStraight(-1200)
+
+gyroStraight(1200)
+gyroStraight(-1200)
+
 
 #initalize the drive train code
 
