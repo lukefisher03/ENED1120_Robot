@@ -8,13 +8,14 @@ from pybricks.media.ev3dev import SoundFile, ImageFile
 
 class GyroBase:
     #constructor function
-    def __init__(self,ev3, gyro, l_motor, r_motor, arm, ultrasonic):
+    def __init__(self,ev3, gyro, l_motor, r_motor, arm, ultrasonic, colorSense):
         self.gyro = gyro
         self.ev3 = ev3
         self.l_motor = l_motor
         self.r_motor = r_motor
         self.arm = arm
         self.ultrasonic = ultrasonic
+        self.color = colorSense
     holdingObject = True
     motorConstant = 0.371
     #Move straight
@@ -30,10 +31,10 @@ class GyroBase:
                 self.ev3.screen.print("Distance: " + str(self.r_motor.angle() * self.motorConstant))
                 if self.gyro.angle() >= 0 + 1.5:
                     self.r_motor.run(runSpeed)
-                    self.l_motor.run(runSpeed-50)
+                    self.l_motor.run(runSpeed-20)
                 elif self.gyro.angle() <= 0 - 1.5:
                     self.l_motor.run(runSpeed)
-                    self.r_motor.run(runSpeed-250)
+                    self.r_motor.run(runSpeed-20)
                 else:
                     self.l_motor.run(runSpeed)
                     self.r_motor.run(runSpeed)
@@ -41,10 +42,10 @@ class GyroBase:
             while self.r_motor.angle() * self.motorConstant >= dist:#it's not going to run into things moving backwards.
                 
                 if self.gyro.angle() >= 0 + 1.5:
-                    self.r_motor.run(-runSpeed+50)
+                    self.r_motor.run(-runSpeed+20)
                     self.l_motor.run(-runSpeed)
                 elif self.gyro.angle() <= 0 - 1.5:
-                    self.l_motor.run(-runSpeed+50)
+                    self.l_motor.run(-runSpeed+20)
                     self.r_motor.run(-runSpeed)
                 else:
                     self.l_motor.run(-runSpeed)
@@ -65,12 +66,12 @@ class GyroBase:
             return "Object detected"
         self.gyro.reset_angle(0)#Make sure to reset the gyro to 0 to get accurate turns.
         if angle < 0:
-            while self.gyro.angle() > angle + 2:
+            while self.gyro.angle() > angle + 5:
                 self.r_motor.run(100)
                 self.l_motor.run(-100)
         
         else:
-            while self.gyro.angle() < angle - 2:
+            while self.gyro.angle() < angle - 5:
                 self.r_motor.run(-100)
                 self.l_motor.run(100)
         self.r_motor.stop()
@@ -98,3 +99,7 @@ class GyroBase:
             return False #if the arm is holding an object, it should not detect anything.
     def still(self, time_s): #time in seconds
         wait(time_s*1000)
+    def identify(self, box):
+        self.ev3.screen.clear()
+        self.ev3.screen.print("Box: " + str(box))
+    

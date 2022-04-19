@@ -7,11 +7,9 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 from GyroBase import GyroBase
-
-
 # Create your objects here.
 ev3 = EV3Brick()
-ev3.screen.print
+
 #initalize motor object classes
 l_motor = Motor(Port.A)
 r_motor = Motor(Port.B)
@@ -22,4 +20,11 @@ colorSense = ColorSensor(Port.S4)
 
 dBase = GyroBase(ev3, gyro, l_motor,r_motor,arm,ultrasonic,colorSense)
 
-dBase.gyroTurn(90)
+dBase.gyroStraight(600,-6)
+dBase.gyroTurn(180)
+dBase.gyroStraight(600,12)
+dBase.gyroTurn(-90)
+dBase.gyroStraight(600,96)
+dBase.gyroTurn(-90)
+dBase.gyroStraight(600,12)
+dBase.gyroTurn(180)

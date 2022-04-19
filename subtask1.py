@@ -16,16 +16,24 @@ r_motor = Motor(Port.B)
 arm = Motor(Port.D)
 gyro = GyroSensor(Port.S3)
 ultrasonic = UltrasonicSensor(Port.S2)
+colorSense = ColorSensor(Port.S4)
 
-dBase = GyroBase(ev3, gyro, l_motor,r_motor,arm,ultrasonic)
+dBase = GyroBase(ev3, gyro, l_motor,r_motor,arm,ultrasonic,colorSense)
 
-stopDist = 12
-
-dBase.gyroStraight(600, 36)
+stopDist = 36
+        
+dBase.gyroStraight(600, 60)
 dBase.gyroTurn(90)
-dBase.gyroStraight(600, stopDist)
-wait(5000)
-ev3.speaker.beep()
-dBase.gyroStraight(600, 96-stopDist)
+dBase.gyroStraight(600,30) 
+dBase.gyroTurn(-90)
+dBase.gyroStraight(600,5)
+dBase.lift("UP")
 dBase.gyroTurn(90)
-dBase.gyroStraight(600, 36)
+dBase.gyroStraight(600,12)
+dBase.gyroTurn(-90)
+dBase.gyroStraight(600,30)
+dBase.gyroTurn(-90)
+dBase.gyroStraight(600,36)
+dBase.gyroTurn(90)
+dBase.gyroStraight(600,10)
+dBase.lift("DOWN")
